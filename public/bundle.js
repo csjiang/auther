@@ -25892,7 +25892,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.logMeOut = exports.createUser = exports.fetchUser = undefined;
+	exports.logOut = exports.createUser = exports.fetchUser = undefined;
 	exports.default = reducer;
 	
 	var _axios = __webpack_require__(218);
@@ -25970,14 +25970,12 @@
 		};
 	};
 	
-	var logMeOut = exports.logMeOut = function logMeOut() {
+	var logOut = exports.logOut = function logOut() {
 		return function (dispatch) {
 			_axios2.default.get('/api/login').then(function (r) {
 				return console.log(r);
 			}).then(function () {
-				return dispatch(function () {
-					return setCurrentUser({});
-				});
+				return dispatch(setCurrentUser({}));
 			});
 		};
 	};
@@ -31812,12 +31810,10 @@
 	var mapDispatch = function mapDispatch(dispatch) {
 	  return {
 	    logout: function logout() {
-	      return dispatch(function () {
-	        return (0, _login.logMeOut)();
-	      });
+	      console.log('press!');
+	      dispatch((0, _login.logOut)());
+	      _reactRouter.browserHistory.push('/');
 	    }
-	    // browserHistory.push('/');
-	    // }
 	  };
 	};
 	

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from'react-redux';
 import { Link, browserHistory } from 'react-router';
-import { logMeOut } from '../redux/login';
+import { logOut } from '../redux/login';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -79,9 +79,10 @@ const mapProps = state => {
 };
 
 const mapDispatch = dispatch => ({
-  logout: () => dispatch(() => logMeOut())
-    // browserHistory.push('/');
-  // }
+  logout: () => {
+    dispatch(logOut())
+    browserHistory.push('/');
+  }
 })
 
 export default connect(mapProps, mapDispatch)(Navbar);

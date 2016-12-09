@@ -63,10 +63,10 @@ export const createUser = function(email, password){
 	};
 }
 
-export const logMeOut = function() {
+export const logOut = () => {
 	return dispatch => {
 		axios.get('/api/login')
 		.then(r => console.log(r))
-		.then(() => dispatch(() => setCurrentUser({})));
+		.then(() => dispatch(setCurrentUser({})));
 	}
 }

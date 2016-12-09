@@ -4,12 +4,14 @@ var app = require('express')();
 var path = require('path');
 var User = require('../api/users/user.model');
 var session = require('express-session');
+// var bodyParser = require('body-parser');
 
 app.use(require('./logging.middleware'));
 app.use(require('./request-state.middleware'));
 app.use(require('./statics.middleware'));
 app.use(session({
-	secret: 'Grace Hopper rules'
+	secret: 'Grace Hopper rules',
+	cookie: {maxAge: 3600000}
 }));
 
 // counter middleware
@@ -24,6 +26,10 @@ app.use(function (req, res, next) {
   console.log('session', req.session);
   next();
 });
+
+// //bodyparser
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json())
 
 app.use('/api', require('../api/api.router'));
 

@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from'react-redux';
 import { browserHistory } from 'react-router';
+import { fetchUser } from '../redux/login';
 
 /* -----------------    COMPONENT     ------------------ */
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      email: '',
+      password: ''
+    }
     
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   render() {
@@ -22,7 +29,9 @@ class Login extends React.Component {
                   <input
                     name="email" 
                     type="email" 
-                    className="form-control" 
+                    className="form-control"
+                    onChange={this.handleInput}
+                    value={this.state.email}
                     required 
                   />
                 </div>
@@ -31,7 +40,9 @@ class Login extends React.Component {
                     <input 
                       name="password"
                       type="password" 
-                      className="form-control" 
+                      className="form-control"
+                      onChange={this.handleInput}
+                      value={this.state.password} 
                       required 
                     />
                 </div>
@@ -58,15 +69,36 @@ class Login extends React.Component {
   }
 
   onLoginSubmit(event) {
-    const { message } = this.props;
     event.preventDefault();
-    console.log(`${message} isn't implemented yet`);
+
+    const email = this.state.email;
+    const password =this.state.password;
+
+    this.props.fetchUser(email, password);
+
+  }
+
+  handleInput(event) {
+  
+    if(event.target.type === 'email'){
+      this.setState({
+        email: event.target.value
+      })
+    }
+
+    if(event.target.type === 'password'){
+      this.setState({
+        password: event.target.value
+      })
+    }
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = () => ({ message: 'Log in' })
-const mapDispatch = null
+const mapDispatch = dispatch => ({fetchUser: fetchUser(email, password){
+  dispatch(fetchUser(email, password));
+}})
 
 export default connect(mapState, mapDispatch)(Login);

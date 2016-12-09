@@ -12,7 +12,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: ''
-    }
+    };
     
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -72,7 +72,7 @@ class Login extends React.Component {
     event.preventDefault();
 
     const email = this.state.email;
-    const password =this.state.password;
+    const password = this.state.password;
 
     this.props.fetchUser(email, password);
 
@@ -80,13 +80,13 @@ class Login extends React.Component {
 
   handleInput(event) {
   
-    if(event.target.type === 'email'){
+    if (event.target.type === 'email') {
       this.setState({
         email: event.target.value
       })
     }
 
-    if(event.target.type === 'password'){
+    if (event.target.type === 'password') {
       this.setState({
         password: event.target.value
       })
@@ -97,8 +97,8 @@ class Login extends React.Component {
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = () => ({ message: 'Log in' })
-const mapDispatch = dispatch => ({fetchUser: fetchUser(email, password){
-  dispatch(fetchUser(email, password));
-}})
+const mapDispatch = dispatch => ({
+  fetchUser: (email, password) => dispatch(fetchUser(email, password))
+});
 
 export default connect(mapState, mapDispatch)(Login);

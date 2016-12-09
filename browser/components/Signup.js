@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from'react-redux';
 import { browserHistory } from 'react-router';
+import { createUser } from '../redux/login';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -8,7 +9,13 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     
+    this.state = {
+      email: '',
+      password: ''
+    };
+
     this.onSignupSubmit = this.onSignupSubmit.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   render() {
@@ -23,6 +30,8 @@ class Signup extends React.Component {
                     name="email" 
                     type="email" 
                     className="form-control" 
+                    onChange={this.handleInput}
+                    value={this.state.email}
                     required 
                   />
                 </div>
@@ -32,6 +41,8 @@ class Signup extends React.Component {
                       name="password"
                       type="password" 
                       className="form-control" 
+                      onChange={this.handleInput}
+                      value={this.state.password} 
                       required 
                     />
                 </div>
@@ -58,15 +69,34 @@ class Signup extends React.Component {
   }
 
   onSignupSubmit(event) {
-    const { message } = this.props;
     event.preventDefault();
-    console.log(`${message} isn't implemented yet`);
+    const email = this.state.email;
+    const password = this.state.password;
+
+    this.props.createUser(email, password);
+  }
+
+  handleInput(event) {
+  
+    if (event.target.type === 'email') {
+      this.setState({
+        email: event.target.value
+      })
+    }
+
+    if (event.target.type === 'password') {
+      this.setState({
+        password: event.target.value
+      })
+    }
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
 const mapState = () => ({ message: 'Sign up' })
-const mapDispatch = null
+const mapDispatch = dispatch => ({
+  createUser: (email, password) => dispatch(createUser(email, password))
+});
 
 export default connect(mapState, mapDispatch)(Signup);
